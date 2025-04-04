@@ -74,3 +74,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 /[Aa]ssets/Vertical 2D Shooting BE4/*
+Assets/README_SD_UnityChan_en.txt
+Assets/README_SD_UnityChan_en.txt.meta
+Assets/README_SD_UnityChan_jp.txt
+Assets/README_SD_UnityChan_jp.txt.meta
+Assets/UnityChan/
+Assets/UnityChan.meta
