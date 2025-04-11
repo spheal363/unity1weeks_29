@@ -73,10 +73,8 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-/[Aa]ssets/Vertical 2D Shooting BE4/*
-Assets/README_SD_UnityChan_en.txt
-Assets/README_SD_UnityChan_en.txt.meta
-Assets/README_SD_UnityChan_jp.txt
-Assets/README_SD_UnityChan_jp.txt.meta
-Assets/UnityChan/
-Assets/UnityChan.meta
+# Ignore everything inside the "Vertical 2D Shooting BE4" folder
+/Assets/Vertical 2D Shooting BE4/
+
+# Ignore all files and folders that contain "UnityChan" in their names
+Assets/*UnityChan*
