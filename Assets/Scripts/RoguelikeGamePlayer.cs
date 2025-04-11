@@ -23,7 +23,7 @@ public class RoguelikeGamePlayer : BasePlayer {
 
     private void HandleMovement() {
         inputVector = gameInputManager.GetMovementVectorNormalized();
-        Vector3 moveDirection = new Vector3(inputVector.x, inputVector.y, 0f);
+        Vector3 moveDirection = new Vector3(inputVector.x, 0f, inputVector.y);
         float moveDistance = moveSpeed * Time.deltaTime;
 
         this.transform.position += moveDirection * moveDistance;
