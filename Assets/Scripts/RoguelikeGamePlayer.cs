@@ -22,12 +22,15 @@ public class RoguelikeGamePlayer : BasePlayer {
     }
 
     private void HandleMovement() {
-        inputVector = gameInputManager.GetMovementVectorNormalized();
-        Vector3 moveDirection = new Vector3(inputVector.x, 0f, inputVector.y);
+        Vector2 inputVector = gameInputManager.GetMovementVectorNormalized();
+        Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
         float moveDistance = moveSpeed * Time.deltaTime;
 
-        this.transform.position += moveDirection * moveDistance;
 
+        transform.position += moveDir * moveDistance;
         isMoving = inputVector != Vector2.zero;
+
+        float rotateSpeed = 10f;
+        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
     }
 }

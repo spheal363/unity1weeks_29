@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour {
+public class ShootingGamePlayerAnimator : MonoBehaviour {
     private const string IS_MOVING = "IsMoving";
     private const string HORIZONTAL = "Horizontal";
 
