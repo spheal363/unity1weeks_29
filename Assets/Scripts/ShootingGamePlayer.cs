@@ -1,13 +1,17 @@
 using UnityEngine;
+using Unity.Netcode;
 
 public class ShootingGamePlayer : BasePlayer {
     public static ShootingGamePlayer Instance { get; private set; }
 
     private RectTransform playerRectTransform;
     [SerializeField] private float moveSpeed = 120.0f;
-    [SerializeField] private GameInputManager gameInputManager;
+    [SerializeField] private InputManager inputManager;
 
-    private Vector2 inputVector;
+    private NetworkVariable<Vector2> inputVector = new NetworkVariable<Vector2>(
+        Vector2.zero,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
 
     private void Awake() {
         if (Instance != null) {
@@ -17,23 +21,40 @@ public class ShootingGamePlayer : BasePlayer {
         playerRectTransform = GetComponent<RectTransform>();
     }
 
-    private void Update() {
-        // プレイヤーの移動を制御する
-        HandleMovement();
+    private void Update()
+    {
+        if (isControlEnabled && !IsServer)
+        {
+            SetMoveInputServerRpc(inputManager.GetMovementVectorNormalized());
+            return;
+        }
+        else if (isControlEnabled && IsServer) {
+            inputVector.Value = inputManager.GetMovementVectorNormalized();
+            HandleMovement();
+        }
+
+        // 操作権がないホストは移動制御のみ行う
+        if (!isControlEnabled && IsServer) {
+            // プレイヤーの移動を制御する
+            HandleMovement();
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SetMoveInputServerRpc(Vector2 inputVector) {
+        this.inputVector.Value = inputVector;
     }
 
     private void HandleMovement() {
-        inputVector = gameInputManager.GetMovementVectorNormalized();
-        Vector3 moveDirection = new Vector3(inputVector.x, inputVector.y, 0f);
+        Vector3 moveDirection = new Vector3(inputVector.Value.x, inputVector.Value.y, 0f);
         float moveDistance = moveSpeed * Time.deltaTime;
 
         playerRectTransform.localPosition += moveDirection * moveDistance;
 
-        isMoving = inputVector != Vector2.zero;
+        isMoving.Value = inputVector.Value != Vector2.zero;
     }
 
-    public float Horizontal()
-    {
-        return inputVector.x;
+    public float Horizontal() {
+        return inputVector.Value.x;
     }
 }

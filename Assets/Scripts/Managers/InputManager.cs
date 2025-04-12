@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class GameInputManager : MonoBehaviour {
-    public static GameInputManager Instance { get; private set; }
+public class InputManager : MonoBehaviour {
+    public static InputManager Instance { get; private set; }
 
     private PlayerInputActions playerInputActions;
 

@@ -78,3 +78,6 @@ crashlytics-build.properties
 
 # Ignore all files and folders that contain "UnityChan" in their names
 Assets/*UnityChan*
+
+# Ignore exec folder
+exec/*
